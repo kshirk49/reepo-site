@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Reepo · Every stem from your project, bounced for you</title>
-<meta name="description" content="Reepo bounces every stem from your Logic Pro, Ableton Live, FL Studio or Pro Tools project while you use your Mac, then tags, files and shares them in one link. True stems add back up to your master. Free private beta for Mac.">
+<title>Reepo · Your stems, bounced for you</title>
+<meta name="description" content="Reepo bounces every track in your Logic Pro, Ableton Live, FL Studio or Pro Tools project, labels the stems and puts the song in one link you can send. True stems add up to your master. Free private beta for Mac.">
 <link rel="canonical" href="https://reepo.studio/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://reepo.studio/">
 <meta property="og:site_name" content="Reepo">
-<meta property="og:title" content="Reepo · Bounced. Tagged. Sent.">
-<meta property="og:description" content="Every stem from your project, bounced for you, tagged and shared in one link. Logic Pro, Ableton Live, FL Studio, Pro Tools. Free private beta for Mac.">
+<meta property="og:title" content="Reepo bounces your stems for you.">
+<meta property="og:description" content="Every track in your Logic Pro, Ableton Live, FL Studio or Pro Tools project, bounced, labelled and shared in one link. Free private beta for Mac.">
 <meta property="og:image" content="https://reepo.studio/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#121110">
+<meta name="theme-color" content="#EEE9DF">
 <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/icon-64.png">
 <link rel="apple-touch-icon" href="assets/icon-256.png">
@@ -25,9 +25,10 @@
 @font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url(assets/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2"); }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url(assets/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2"); }
 
-/* Layout: the product is the opening (one project played through bounce → tag → send beside three huge words), then one
-   section per reason to want it, each with one picture: True stems, one song with every version, finding a sound, three
-   answers, the payoff. Night-dark top and bottom, oat paper between. Signal red means wet only; TRUE is an ink outline. */
+/* The poster: type does the work. Hero line, then one pinned act where three words become what they say (Bounced. fills in
+   behind a playhead, Tagged. collects its chips, Sent. turns into a link), one night of sending stems scrolled sideways,
+   True stems as an equation, three answers, the close. Oat paper, night for the night and the close.
+   Signal red means wet only; TRUE is an ink outline. Motion: GSAP ScrollTrigger; everything reads without it. */
 :root {
   --paper: #EEE9DF; --ink: #0B0B0C; --night: #121110; --oat: #ECE7DC; --signal: #E2492F;
   --bg: var(--paper); --fg: var(--ink);
@@ -41,363 +42,245 @@
   --cat-keys: oklch(0.56 0.11 185); --cat-guitar: oklch(0.56 0.15 140); --cat-synth: oklch(0.56 0.19 345);
   --t2: color-mix(in srgb, var(--fg) 66%, transparent);
   --t3: color-mix(in srgb, var(--fg) 58%, transparent);
-  --t4: color-mix(in srgb, var(--fg) 40%, transparent);
+  --t4: color-mix(in srgb, var(--fg) 30%, transparent);
   --rule: color-mix(in srgb, var(--fg) 15%, transparent); --rule-2: color-mix(in srgb, var(--fg) 32%, transparent);
 }
-.band.dark { --bg: var(--night); --fg: var(--oat);
+.band.night { --bg: var(--night); --fg: var(--oat);
   --cat-drums: oklch(0.72 0.08 48); --cat-bass: oklch(0.72 0.13 260); --cat-vocals: oklch(0.80 0.13 90);
   --cat-keys: oklch(0.74 0.10 185); --cat-guitar: oklch(0.74 0.14 140); --cat-synth: oklch(0.72 0.17 345); }
+.band.paper2 { --bg: #E4DED1; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) { color-scheme: dark; }
-  :root:not([data-theme="light"]) .band:not(.dark) { --bg: #1E1C19; --fg: #ECE7DC;
+  :root:not([data-theme="light"]) .band:not(.night) { --bg: #1E1C19; --fg: #ECE7DC;
     --cat-drums: oklch(0.72 0.08 48); --cat-bass: oklch(0.72 0.13 260); --cat-vocals: oklch(0.80 0.13 90);
-    --cat-keys: oklch(0.74 0.10 185); --cat-guitar: oklch(0.74 0.14 140); --cat-synth: oklch(0.72 0.17 345); } }
-:root[data-theme="dark"] .band:not(.dark) { --bg: #1E1C19; --fg: #ECE7DC;
+    --cat-keys: oklch(0.74 0.10 185); --cat-guitar: oklch(0.74 0.14 140); --cat-synth: oklch(0.72 0.17 345); }
+  :root:not([data-theme="light"]) .band.paper2 { --bg: #191714; } }
+:root[data-theme="dark"] .band:not(.night) { --bg: #1E1C19; --fg: #ECE7DC;
   --cat-drums: oklch(0.72 0.08 48); --cat-bass: oklch(0.72 0.13 260); --cat-vocals: oklch(0.80 0.13 90);
   --cat-keys: oklch(0.74 0.10 185); --cat-guitar: oklch(0.74 0.14 140); --cat-synth: oklch(0.72 0.17 345); }
+:root[data-theme="dark"] .band.paper2 { --bg: #191714; }
 .band::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: url(assets/paper-grain.png) 0 0 / 256px; opacity: .2; mix-blend-mode: multiply; }
-.band.dark::before { mix-blend-mode: screen; opacity: .07; }
+.band.night::before { mix-blend-mode: screen; opacity: .07; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .band::before { mix-blend-mode: screen; opacity: .07; } }
 :root[data-theme="dark"] .band::before { mix-blend-mode: screen; opacity: .07; }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--night); color: var(--oat); font: 400 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body { background: #1E1C19; } }
 .wrap { position: relative; max-width: 1280px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-section.band > .wrap { padding-block: clamp(96px, 12vw, 168px); }
-section.band:not(.dark) + section.band:not(.dark) > .wrap { padding-top: clamp(24px, 4vw, 56px); }
-section.band:not(.dark):has(+ section.band:not(.dark)) > .wrap { padding-bottom: clamp(72px, 8vw, 112px); }
+.pad { padding-block: clamp(88px, 11vw, 160px); }
 .mono { font-family: var(--mono); font-size: 13px; }
-h1, h2, h3 { font-weight: 800; letter-spacing: -0.05em; line-height: .88; margin: 0; overflow-wrap: normal; hyphens: none; }
-h2 { font-size: clamp(46px, 7.2vw, 108px); text-wrap: balance; }
-.lede { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.45; color: var(--t2); max-width: 31em; margin: 26px 0 0; }
+.t3 { color: var(--t3); }
+h1, h2, h3 { font-weight: 800; letter-spacing: -0.05em; line-height: .9; margin: 0; text-wrap: balance; overflow-wrap: normal; hyphens: none; }
+h2 { font-size: clamp(42px, 6.6vw, 100px); }
+.lede { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.45; color: var(--t2); max-width: 31em; margin: 24px 0 0; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
 
-.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px; border-radius: 3px; background: var(--fg); color: var(--bg); font: 650 16px var(--sans); text-decoration: none; transition: transform 180ms var(--ease), opacity 150ms; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 24px; border-radius: 3px; border: 0; cursor: pointer; background: var(--fg); color: var(--bg); font: 650 16px var(--sans); text-decoration: none; transition: transform 180ms var(--ease), opacity 150ms; }
 .btn:hover { opacity: .86; } .btn:active { transform: scale(.96); }
 .btn .arr { transition: transform 220ms var(--ease); } .btn:hover .arr { transform: translateX(3px); }
-
-/* the app's own marks (ui/styles.css .wd): outlined, square-cornered; red only for wet */
-.badge { font: 500 10.5px/1.4 var(--mono); letter-spacing: .04em; padding: 2px 7px; border-radius: 2px; white-space: nowrap; }
+.btn.sm { min-height: 38px; padding: 0 16px; font-size: 14px; }
+.badge { font: 500 10.5px/1.4 var(--mono); letter-spacing: .04em; padding: 2px 7px; border-radius: 2px; white-space: nowrap; display: inline-block; font-style: normal; }
 .badge.wet { color: var(--signal); box-shadow: inset 0 0 0 1px var(--signal); }
 .badge.dry { color: var(--t2); box-shadow: inset 0 0 0 1px var(--rule-2); }
 .badge.true { color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); }
-.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; padding: 2px 10px; border-radius: 99px; border: 1px solid var(--rule-2); white-space: nowrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 99px; border: 1px solid var(--rule-2); white-space: nowrap; background: var(--bg); }
 .sw { width: 9px; height: 9px; border-radius: 2px; background: var(--c); flex: none; display: inline-block; }
 .wf { display: flex; align-items: center; gap: 2px; height: 100%; min-width: 0; }
 .wf i { flex: 1; background: var(--c, var(--fg)); border-radius: 1px; min-height: 1px; }
-.cover { background: center / cover no-repeat; border-radius: 2px; aspect-ratio: 1; box-shadow: 0 .5px 1px rgba(0,0,0,.3), 0 10px 18px -10px rgba(0,0,0,.5); flex: none; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 21px; letter-spacing: -0.03em; text-decoration: none; }
+.logo svg { width: 28px; height: 28px; }
+.topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
+.topbar .wrap { display: flex; justify-content: space-between; align-items: center; padding-block: 22px; }
 .textbtn { background: none; border: 0; padding: 0; font: 13px var(--mono); color: var(--t2); cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule-2); text-underline-offset: 3px; }
 .textbtn:hover { color: var(--fg); }
-
-/* ================= 1 · the opening ================= */
-.top { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
-.top .wrap { display: flex; justify-content: space-between; align-items: center; padding-block: 24px; }
-.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 22px; letter-spacing: -0.03em; text-decoration: none; }
-.logo svg { width: 30px; height: 30px; }
-.top .btn { min-height: 38px; padding: 0 16px; font-size: 14px; }
-
-.hero { min-height: min(100svh, 980px); display: flex; }
-.hero > .wrap { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 80px); align-items: center; padding-block: 120px 80px !important; }
-.hero h1 { font-size: clamp(60px, 9.2vw, 138px); }
-.hero h1 .w { display: block; color: var(--fg); transition: color 500ms var(--ease); }
-.hero.run h1 .w { color: color-mix(in srgb, var(--fg) 34%, transparent); }
-.hero.run h1 .w.lit { color: var(--fg); }
-.hero .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 36px; }
-.hero .meta { margin-top: 28px; display: grid; gap: 6px; color: var(--t3); }
-
-.stage-wrap { position: relative; min-width: 0; }
-.stage { position: relative; height: 470px; }
-.stage .src { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); transition: opacity 500ms; }
-.stage .src .song { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -0.03em; font-size: 20px; }
-.stage .src .song .cover { width: 34px; }
-.stage .src .song .mono { font-weight: 400; letter-spacing: 0; color: var(--t2); font-size: 12.5px; }
-.stage .src .key { color: var(--t2); opacity: 0; transition: opacity 400ms; }
-.stage .press { position: absolute; left: 50%; top: 270px; transform: translateX(-50%); display: inline-flex; align-items: center; min-height: 42px; padding: 0 20px; border-radius: 3px; background: var(--fg); color: var(--bg); font-weight: 650; font-size: 15px; transition: opacity 400ms, transform 120ms var(--ease); white-space: nowrap; opacity: 0; }
-.stage .press.down { transform: translateX(-50%) scale(.94); }
-.stage .mw { position: absolute; left: 0; right: 0; top: 150px; height: 70px; opacity: 0; transition: opacity 600ms var(--ease); }
-.lanes { position: absolute; left: 0; right: 0; top: 74px; height: 330px; }
-.ln { position: absolute; left: 0; right: 0; top: 0; height: 46px; display: grid; grid-template-columns: 96px minmax(0, 1fr) 146px; gap: 14px; align-items: center;
-  transform: translateY(calc(var(--k) * 55px)); transition: transform 900ms var(--ease), opacity 600ms; }
-.ln .nm { display: flex; align-items: center; gap: 8px; font-weight: 650; font-size: 14px; white-space: nowrap; overflow: hidden; }
-.ln .wf { height: 36px; }
-.ln .rt { position: relative; height: 22px; }
-.ln .rt > span { position: absolute; right: 0; top: 0; display: flex; gap: 5px; transition: opacity 400ms, transform 500ms var(--ease); }
-.ln .rt .tag { opacity: 0; transform: translateY(6px); }
-.stage .link { position: absolute; left: 50%; top: 130px; width: min(100%, 420px); transform: translate(-50%, 24px); opacity: 0; transition: opacity 500ms, transform 700ms var(--ease); pointer-events: none;
-  background: color-mix(in srgb, var(--fg) 7%, var(--bg)); border: 1px solid var(--rule-2); border-radius: 6px; padding: 20px; }
-.stage .link .hd { display: flex; gap: 14px; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
-.stage .link .hd .cover { width: 56px; }
-.stage .link .hd b { display: block; font-size: 24px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
-.stage .link .hd .mono { color: var(--t2); font-size: 12px; }
-.stage .link .hd .pill { margin-left: auto; font: 650 13px var(--sans); background: var(--fg); color: var(--bg); padding: 7px 12px; border-radius: 3px; white-space: nowrap; }
-.stage .link .who { display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; padding-top: 14px; font-size: 15px; }
-.stage .link .who span:nth-child(even) { font: 12px var(--mono); color: var(--t2); align-self: center; }
-.stage-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; color: var(--t3); }
-
-.stage[data-p="0"] .ln { opacity: 0; transform: translateY(110px); }
-.stage[data-p="0"] .mw, .stage[data-p="0"] .press { opacity: 1; }
-.stage[data-p="2"] .ln .rt .kind, .stage[data-p="3"] .ln .rt .kind { opacity: 0; transform: translateY(-6px); }
-.stage[data-p="2"] .ln .rt .tag, .stage[data-p="3"] .ln .rt .tag { opacity: 1; transform: none; }
-.stage[data-p="2"] .src .key { opacity: 1; }
-.stage[data-p="3"] .ln { transform: translateY(calc(var(--k) * 10px + 120px)) scale(.92); opacity: 0; }
-.stage[data-p="3"] .link { opacity: 1; transform: translate(-50%, 0); }
-.stage[data-p="3"] .src { opacity: .55; }
-
-/* ================= 2 · True stems ================= */
-.truesec .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 96px); align-items: center; }
-.truesec h2 .o { display: block; color: var(--t4); }
-.seg { display: inline-flex; margin-top: 40px; border: 1px solid var(--rule-2); border-radius: 3px; padding: 3px; gap: 3px; }
+.seg { display: inline-flex; border: 1px solid var(--rule-2); border-radius: 4px; padding: 3px; gap: 3px; }
 .seg button { all: unset; cursor: pointer; padding: 9px 16px; border-radius: 2px; font-weight: 650; font-size: 15px; color: var(--t2); transition: background-color 200ms, color 200ms; }
 .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
 .seg button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-.mix { min-width: 0; }
-.mix .st, .mix .line, .mix .diff { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: center; }
-.mix .st { height: 30px; font-size: 13px; font-weight: 650; }
-.mix .st .wf { height: 22px; }
-.mix .line { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule-2); font-size: 13px; font-weight: 800; }
-.mix .line .wf { height: 56px; }
-.mix .line.sum .sums { position: relative; height: 56px; }
-.mix .line.sum .sums .wf { position: absolute; inset: 0; transition: opacity 500ms var(--ease); }
-.mix .line.sum .sums .wf.wet { opacity: 0; }
-.mix.wet .line.sum .sums .wf.wet { opacity: 1; } .mix.wet .line.sum .sums .wf.tru { opacity: 0; }
-.mix .line.master { border-top: 0; margin-top: 6px; padding-top: 0; color: var(--t2); font-weight: 650; }
-.mix .line.master .wf i { background: color-mix(in srgb, var(--fg) 30%, transparent); }
-.mix .diff { margin-top: 18px; font-size: 13px; font-weight: 650; }
-.mix .diff .res { position: relative; height: 40px; }
-.mix .diff .res .wf { position: absolute; inset: 0; transition: transform 700ms var(--ease), opacity 500ms; }
-.mix .diff .res .wf i { background: color-mix(in srgb, var(--fg) 55%, transparent); }
-.mix .diff .res .flat { position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px solid var(--fg); transition: opacity 500ms 200ms; }
-.mix:not(.wet) .diff .res .wf { transform: scaleY(0); opacity: 0; }
-.mix.wet .diff .res .flat { opacity: 0; }
-.mix .verdict { margin: 22px 0 0 106px; font-weight: 650; font-size: 18px; letter-spacing: -0.01em; min-height: 1.6em; }
 
-/* ================= 3 · one song, every version ================= */
-.songs .grid { display: grid; grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1.1fr); gap: clamp(20px, 3vw, 40px); align-items: center; margin-top: 72px; }
-.mess { list-style: none; margin: 0; padding: 0; font: 13.5px/1.2 var(--mono); min-width: 0; }
-.mess li { display: flex; justify-content: space-between; gap: 14px; padding: 11px 0; border-bottom: 1px dashed var(--rule); transition: opacity 600ms var(--ease); min-width: 0; }
-.mess li b { font-weight: 500; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-.mess li span { color: var(--t3); white-space: nowrap; }
-.songs.go .mess li { opacity: .55; }
-.songs.go .mess li b { text-decoration: line-through; text-decoration-color: var(--rule-2); }
-.songs .arrow { font-weight: 800; font-size: 44px; text-align: center; color: var(--t3); }
-.songcard { border-top: 2px solid var(--fg); padding-top: 18px; min-width: 0; }
-.songcard .hd { display: flex; align-items: center; gap: 16px; }
-.songcard .hd .cover { width: 64px; }
-.songcard .hd b { display: block; font-weight: 800; font-size: 32px; letter-spacing: -0.045em; line-height: 1; }
-.songcard .hd .mono { color: var(--t2); }
-.vers { margin-top: 18px; }
-.ver { display: grid; grid-template-columns: 30px 34px minmax(0, 1fr) 120px 64px; gap: 14px; align-items: center; height: 54px; border-bottom: 1px solid var(--rule); font-size: 15px; transition: opacity 500ms var(--ease), transform 600ms var(--ease); }
-.ver .pl { width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--fg); display: grid; place-items: center; font-size: 9px; }
-.ver.newest .pl { background: var(--fg); color: var(--bg); }
-.ver .v { font: 500 13px var(--mono); }
-.ver .what { min-width: 0; } .ver .what b { font-weight: 650; } .ver .what span { display: block; color: var(--t3); font: 12px var(--mono); }
-.ver .wf { height: 22px; }
-.ver .wf i { background: color-mix(in srgb, var(--fg) 40%, transparent); }
-.ver.newest .wf i { background: var(--fg); }
-.ver .tagn { justify-self: end; font: 500 10.5px var(--mono); letter-spacing: .05em; padding: 2px 7px; border-radius: 2px; box-shadow: inset 0 0 0 1px var(--rule-2); color: var(--t2); white-space: nowrap; }
-.songcard .shared { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 18px; margin-top: 16px; font-size: 14.5px; color: var(--t2); }
-.songcard .shared b { color: var(--fg); font-weight: 650; }
+/* 1 · hero */
+.hero { min-height: 92svh; display: flex; align-items: flex-end; }
+.hero .wrap { width: 100%; padding-block: 120px 48px; }
+.hero h1 { font-size: clamp(56px, 11vw, 176px); line-height: .86; }
+.hero h1 .l { display: block; overflow: hidden; padding-bottom: .04em; }
+.hero h1 .l > span { display: inline-block; }
+.hero .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px 40px; margin-top: 36px; }
+.hero .row .lede { margin: 0; }
+.strip { height: 64px; margin-top: 44px; }
 
-/* ================= 4 · found by sound ================= */
-.find .field { margin-top: 64px; display: flex; align-items: center; gap: 16px; height: 84px; padding: 0 28px; border-radius: 3px; box-shadow: inset 0 0 0 2px var(--fg); font-weight: 650; font-size: clamp(24px, 3vw, 40px); letter-spacing: -0.03em; }
-.find .field svg { width: 28px; height: 28px; flex: none; opacity: .5; }
-.find .field .cur { width: 2px; height: 1.1em; background: var(--fg); animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-.hits { margin-top: 8px; }
-.hit { display: grid; grid-template-columns: 48px minmax(0, 15em) minmax(0, 1fr) 132px 52px; gap: 20px; align-items: center; height: 72px; border-bottom: 1px solid var(--rule); font-weight: 650; transition: opacity 400ms, transform 500ms var(--ease); }
-.hit .cover { width: 48px; }
-.hit .from { display: block; font-weight: 400; color: var(--t3); font-size: 14px; }
-.hit .wf { height: 30px; }
-.hit .mono { color: var(--t2); }
-.hit .badge { justify-self: end; }
-.hits.typing .hit { opacity: 0; transform: translateY(8px); }
+/* 2 · the poster: static stack by default; .run (set by the script) pins it and layers the three scenes */
+.scene { padding-block: 56px; }
+.poster.run { height: 100svh; overflow: hidden; }
+.poster.run .wrap { height: 100%; }
+.poster.run .scene { position: absolute; left: max(20px, env(safe-area-inset-left, 0px)); right: max(20px, env(safe-area-inset-right, 0px)); top: 50%; padding: 0; }
+.word { position: relative; font-weight: 800; letter-spacing: -0.025em; line-height: .85; font-size: clamp(64px, 17vw, 260px); white-space: nowrap; }
+/* the outline is drawn from the solid letters (grow, then cut the letters out): one clean contour, never a stroke over the font's overlapping inner contours */
+.word .out { color: var(--fg); filter: url(#outline); }
+.word .fill { position: absolute; inset: 0; }
+.word .head { position: absolute; top: -4%; bottom: -4%; width: 2px; background: var(--fg); left: 0; display: none; }
+.poster.run .word .head { display: block; }
+.cap { margin-top: 28px; }
+.cap p { margin: 0; max-width: 30em; font-size: clamp(17px, 1.4vw, 20px); color: var(--t2); }
+.stems { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 30px; }
+.stems > div { min-width: 0; }
+.stems .wf { height: 40px; }
+.stems span { display: flex; justify-content: space-between; gap: 6px; margin-top: 8px; font: 12px var(--mono); color: var(--t2); white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.chips .chip { font-size: 16px; padding: 6px 14px; }
+.link { display: inline-flex; align-items: center; gap: 12px; margin-top: 26px; padding: 10px 10px 10px 18px; border-radius: 6px; border: 1.5px solid var(--fg); font: 500 clamp(14px, 1.6vw, 20px) var(--mono); max-width: 100%; }
+.link span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.link em { font: normal 650 15px var(--sans); background: var(--fg); color: var(--bg); padding: 8px 14px; border-radius: 3px; white-space: nowrap; }
+.roles { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 18px; font-size: 17px; }
+.roles em { font: normal 12px var(--mono); color: var(--t2); margin-left: 8px; }
 
-/* ================= 5 · three answers ================= */
-section.worries > .wrap { padding-bottom: clamp(88px, 10vw, 140px); }
-.qa { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
-.qa > div { border-top: 2px solid var(--fg); padding-top: 22px; }
-.qa h3 { font-weight: 650; font-size: 17px; letter-spacing: 0; line-height: 1.4; }
-.qa .a { display: block; font-weight: 800; font-size: clamp(40px, 4.4vw, 64px); letter-spacing: -0.05em; line-height: .95; margin-top: 10px; }
-.qa p { margin: 14px 0 0; color: var(--t2); max-width: 22em; }
+/* 3 · the night */
+.night-sec { overflow: hidden; }
+.night-sec .pin { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 44px; padding-block: 80px; }
+.night-sec .pin > .wrap { width: 100%; }
+.night-sec h2 { font-size: clamp(38px, 5.4vw, 84px); }
+.track { display: flex; gap: 18px; padding-left: max(20px, env(safe-area-inset-left, 0px)); width: max-content; }
+.card { flex: none; width: clamp(240px, 26vw, 340px); height: clamp(220px, 32vh, 300px); padding: 22px; border-radius: 4px; border: 1px solid var(--rule-2); display: flex; flex-direction: column; justify-content: space-between; }
+.card time { font: 500 clamp(26px, 2.6vw, 38px) var(--mono); letter-spacing: -0.03em; }
+.card p { margin: 0; font-size: 19px; line-height: 1.3; font-weight: 650; letter-spacing: -0.01em; }
+.card p span { display: block; font-weight: 400; color: var(--t3); font-size: 15px; margin-top: 6px; }
+.card.reepo { width: clamp(300px, 46vw, 620px); background: var(--fg); color: var(--bg); border: 0; }
+.card.reepo time { font-size: clamp(20px, 2vw, 28px); }
+.card.reepo .big { font-size: clamp(34px, 4vw, 56px); font-weight: 800; letter-spacing: -0.045em; line-height: .95; }
+.night-sec:not(.run) .track { width: auto; flex-wrap: wrap; padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.night-sec:not(.run) .card { max-width: 100%; }
 
-/* ================= 6 · just the music ================= */
-.close .no { display: block; font-size: clamp(30px, 4.8vw, 72px); line-height: 1.04; color: var(--t4); position: relative; width: fit-content; max-width: 100%; }
-.close .no::after { content: ""; position: absolute; left: -.5%; right: -.5%; top: 52%; height: .07em; background: color-mix(in srgb, var(--fg) 60%, transparent); transform-origin: left; transform: scaleX(1); transition: transform 800ms var(--ease); }
-.close.armed .no::after { transform: scaleX(0); }
-.close.armed.go .no::after { transform: scaleX(1); }
-.close.armed.go .no:nth-child(2)::after { transition-delay: 350ms; } .close.armed.go .no:nth-child(3)::after { transition-delay: 700ms; }
-.close .yes { display: block; font-size: clamp(72px, 12.5vw, 196px); margin-top: .14em; }
+/* 4 · True stems */
+.eq { font-weight: 800; letter-spacing: -0.05em; line-height: .98; font-size: clamp(40px, 7.4vw, 116px); margin-top: 26px; }
+.eq .op { color: var(--t4); font-weight: 400; }
+.eq.run .t { color: var(--t4); }
+.eq .res { display: block; }
+.eq .res .eqs { display: inline-block; min-width: .7em; }
+.truesec .seg { margin-top: 36px; }
+.truesec .why { margin-top: 26px; min-height: 1.6em; font-weight: 650; font-size: 19px; }
+
+/* 5 · three answers */
+.qa > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1.2fr); gap: 12px 32px; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--rule-2); }
+.qa > div:last-child { border-bottom: 1px solid var(--rule-2); }
+.qa h3 { font-weight: 650; font-size: 18px; letter-spacing: 0; line-height: 1.35; }
+.qa .a { font-weight: 800; font-size: clamp(52px, 7vw, 108px); letter-spacing: -0.06em; line-height: .85; }
+.qa p { margin: 0; color: var(--t2); }
+
+/* 6 · the close */
+.close .no { display: block; font-size: clamp(28px, 4.6vw, 70px); line-height: 1.05; color: var(--t4); position: relative; width: fit-content; max-width: 100%; }
+.close .no i { position: absolute; left: -.5%; right: -.5%; top: 52%; height: .07em; background: color-mix(in srgb, var(--fg) 60%, transparent); transform-origin: left; }
+.close .yes { display: block; font-size: clamp(68px, 12vw, 190px); margin-top: .14em; }
 .close .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 48px; }
 .close .cta .mono { color: var(--t2); }
-footer.band > .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--rule); }
-footer .mono { color: var(--t3); }
+footer .wrap { padding-block: 24px 34px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--rule); }
 
 @media (max-width: 920px) {
-  .hero > .wrap { grid-template-columns: minmax(0, 1fr); padding-top: 110px !important; }
-  .hero h1 .w { display: inline; } .hero h1 .w:not(:last-child)::after { content: " "; }
-  .stage { height: 430px; }
-  .truesec .grid, .songs .grid { grid-template-columns: minmax(0, 1fr); }
-  .songs .arrow { transform: rotate(90deg); }
-  .ver { grid-template-columns: 30px 30px minmax(0, 1fr) 64px; } .ver .wf { display: none; }
-  .qa { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .hit { grid-template-columns: 40px minmax(0, 1fr) auto; height: auto; padding: 12px 0; gap: 6px 14px; }
-  .hit .cover { width: 40px; grid-row: span 3; }
-  .hit .wf { grid-column: 2 / -1; grid-row: 2; height: 20px; }
-  .hit .mono { grid-column: 2 / -1; grid-row: 3; font-size: 12px; }
-  .find .field { height: 62px; padding: 0 16px; }
+  .stems { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .qa > div { grid-template-columns: minmax(0, 1fr); }
 }
-@media (max-width: 520px) {
-  .ln { grid-template-columns: 64px minmax(0, 1fr) 120px; gap: 8px; }
-  .ln .nm { font-size: 12px; } .ln .nm .sw { display: none; }
-  .ln .rt .badge { padding: 2px 4px; font-size: 9.5px; }
-  .wf { gap: 1px; }
-  .mix .st, .mix .line, .mix .diff { grid-template-columns: 64px minmax(0, 1fr); }
-  .mix .verdict { margin-left: 78px; }
-  .stage .link .hd .pill { display: none; }
-}
+@media (max-width: 520px) { .wf { gap: 1px; } .link em { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="mark" viewBox="0 0 512 512"><rect width="512" height="512" rx="114" fill="#EEE9DF"/><rect x="128" y="120" width="92" height="272" fill="#0B0B0C"/><path d="M224 120L326.4 124.0A60 60 0 1 1 270.6 211.3Z" fill="#E2492F"/></symbol>
-  <symbol id="srch" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <filter id="outline" x="-2%" y="-5%" width="104%" height="110%" color-interpolation-filters="sRGB"><feMorphology in="SourceGraphic" operator="dilate" radius="1.1" result="grown"/><feComposite in="grown" in2="SourceGraphic" operator="out"/></filter>
 </svg>
 
-<header class="band dark">
-  <div class="top"><div class="wrap"><a class="logo" href="#top" aria-label="Reepo"><svg aria-hidden="true"><use href="#mark"/></svg>Reepo</a><a class="btn js-join" href="mailto:hello@reepo.studio?subject=Reepo%20beta">Ask to join</a></div></div>
-</header>
+<header class="band"><div class="topbar"><div class="wrap"><a class="logo" href="#top" aria-label="Reepo"><svg aria-hidden="true"><use href="#mark"/></svg>Reepo</a><a class="btn sm js-join" href="mailto:hello@reepo.studio?subject=Reepo%20beta">Ask to join</a></div></div></header>
 
 <main>
-<!-- 1 · what it does, shown -->
-<section class="band dark hero" id="top" aria-labelledby="h-top">
-  <div class="wrap">
-    <div>
-      <h1 id="h-top" aria-label="Bounced. Tagged. Sent."><span class="w" data-p="1">Bounced.</span><span class="w" data-p="2">Tagged.</span><span class="w" data-p="3">Sent.</span></h1>
-      <p class="lede">Click Add project. Reepo bounces every stem from your project, tags and files them, and shares the song in one link. You get back to making music.</p>
-      <div class="cta"><a class="btn js-join" href="mailto:hello@reepo.studio?subject=Reepo%20beta">Ask to join the beta <span class="arr">→</span></a></div>
-      <div class="meta mono"><span>For Mac (macOS 14+) · Logic Pro, Ableton Live, FL Studio, Pro Tools</span><span>Real stems, rendered from your project track by track. Nothing guessed from the mix.</span></div>
-    </div>
-    <div class="stage-wrap">
-      <div class="stage" id="stage" data-p="2" aria-hidden="true">
-        <div class="src"><span class="song"><span class="cover" style="background-image:url(assets/covers/coral.jpg)"></span>Slow Burn <span class="mono">Logic Pro</span></span><span class="key mono">92 BPM · A min</span></div>
-        <div class="mw"><div class="wf" data-s="master" data-n="90" data-seed="9"></div></div>
-        <div class="lanes" id="lanes"></div>
-        <span class="press" id="press">Add project</span>
-        <div class="link">
-          <div class="hd"><span class="cover" style="background-image:url(assets/covers/coral.jpg)"></span><span><b>Slow Burn</b><span class="mono">31 stems · one link</span></span><span class="pill">Copy link</span></div>
-          <div class="who"><span>Your mixer</span><span>Can edit</span><span>The artist</span><span>Can download</span><span>The label</span><span>Can listen</span></div>
-        </div>
-      </div>
-      <div class="stage-foot mono"><span>Example song</span><button class="textbtn" type="button" id="pause" aria-pressed="false">Pause</button></div>
-    </div>
-  </div>
-</section>
+<!-- 1 · what it is -->
+<section class="band hero" id="top" aria-labelledby="h-top"><div class="wrap">
+  <h1 id="h-top" aria-label="Reepo bounces your stems for you."><span class="l"><span>Reepo bounces</span></span><span class="l"><span>your stems</span></span><span class="l"><span>for you.</span></span></h1>
+  <div class="row"><p class="lede">It bounces every track in your Logic Pro, Ableton Live, FL Studio or Pro Tools project, labels the stems, and puts the song in one link you can send. You spend the night on the music instead.</p><a class="btn js-join" href="mailto:hello@reepo.studio?subject=Reepo%20beta">Ask to join the beta <span class="arr">→</span></a></div>
+  <div class="strip" aria-hidden="true"><div class="wf" data-s="master" data-n="180" data-seed="9"></div></div>
+</div></section>
 
-<!-- 2 · True stems -->
-<section class="band truesec" aria-labelledby="h-true">
-  <div class="wrap grid">
-    <div>
-      <h2 id="h-true">True stems.<span class="o">True to your master.</span></h2>
-      <p class="lede">Your master bus compressor and limiter work on the whole mix, so stems bounced one by one rarely add back up to your song. True stems do. When a mix can’t be made exact, Reepo tells you.</p>
-      <div class="seg" role="group" aria-label="Stem type"><button type="button" data-k="wet" aria-pressed="false">Ordinary stems</button><button type="button" data-k="true" aria-pressed="true">True stems</button></div>
-    </div>
-    <div class="mix" id="mix">
-      <div id="mixstems"></div>
-      <div class="line sum"><span>Added up</span><div class="sums"><div class="wf wet" data-s="peaky" data-n="110" data-seed="9"></div><div class="wf tru" data-s="master" data-n="110" data-seed="9"></div></div></div>
-      <div class="line master"><span>Your master</span><div class="wf" data-s="master" data-n="110" data-seed="9"></div></div>
-      <div class="diff"><span>Difference</span><div class="res"><div class="wf" data-s="residual" data-n="110" data-seed="4"></div><span class="flat"></span></div></div>
-      <div class="verdict" id="verdict" aria-live="polite">Nothing missing.</div>
-    </div>
+<!-- 2 · the three words -->
+<section class="band poster" id="poster" aria-label="Bounced, tagged, sent"><div class="wrap">
+  <div class="scene" id="s1">
+    <div class="word"><span class="out">Bounced.</span><span class="fill" aria-hidden="true">Bounced.</span><span class="head" aria-hidden="true"></span></div>
+    <div class="stems" aria-hidden="true"></div>
+    <div class="cap"><p>Reepo has your DAW render every track from a copy of your project, with wet, dry and True versions of each. They’re your real tracks, not a guess pulled out of the mix.</p></div>
   </div>
-</section>
+  <div class="scene" id="s2">
+    <div class="word">Tagged.</div>
+    <div class="chips" aria-hidden="true"></div>
+    <div class="cap"><p>Reepo labels each stem by instrument and works out the song’s key and tempo. Later, you can find a stem by typing what it sounds like.</p></div>
+  </div>
+  <div class="scene" id="s3">
+    <div class="word">Sent.</div>
+    <div class="link"><span>reepo.studio/s/slow-burn</span><em>Copy link</em></div>
+    <div class="roles"><span>Your mixer<em>Can edit</em></span><span>The artist<em>Can download</em></span><span>The label<em>Can listen</em></span></div>
+  </div>
+</div></section>
 
-<!-- 3 · one song, every version -->
-<section class="band songs" id="songs" aria-labelledby="h-songs">
-  <div class="wrap">
-    <h2 id="h-songs">Seven files called Slow Burn. One song.</h2>
-    <p class="lede">Add the project again and it becomes the song’s next version, stems and all. Share it once. Your mixer’s mix comes back as the next version, and everyone on the song hears each new one.</p>
-    <div class="grid">
-      <ul class="mess" aria-label="Before Reepo">
-        <li><b>Slow Burn.logicx</b><span>Desktop</span></li>
-        <li><b>Slow Burn FINAL.logicx</b><span>Desktop</span></li>
-        <li><b>Slow Burn FINAL v2.logicx</b><span>Downloads</span></li>
-        <li><b>slow burn stems (1).zip</b><span>Downloads</span></li>
-        <li><b>Slow Burn FINAL v2 real.logicx</b><span>Dropbox</span></li>
-        <li><b>slow burn bounce 3.wav</b><span>Desktop/bounces</span></li>
-        <li><b>Slow Burn mix v3 FINAL (mixer).wav</b><span>Mail</span></li>
-      </ul>
-      <div class="arrow" aria-hidden="true">→</div>
-      <div class="songcard" aria-label="In Reepo">
-        <div class="hd"><span class="cover" style="background-image:url(assets/covers/coral.jpg)"></span><span><b>Slow Burn</b><span class="mono">Logic Pro · 4 versions · 31 stems</span></span></div>
-        <div class="vers" id="vers"></div>
-        <div class="shared"><span>Shared with <b>your mixer</b> and <b>the artist</b></span><span class="mono">every new version, one place</span></div>
-      </div>
-    </div>
+<!-- 3 · one night -->
+<section class="band night night-sec" id="night" aria-labelledby="h-night"><div class="pin">
+  <div class="wrap"><h2 id="h-night">One ordinary night of sending stems.</h2></div>
+  <div class="track" id="track">
+    <div class="card"><time>11:40 pm</time><p>Solo the kick and bounce it.<span>The song’s finished, so now it’s stems.</span></p></div>
+    <div class="card"><time>11:46 pm</time><p>Solo the bass and bounce it.<span>Thirty more to go.</span></p></div>
+    <div class="card"><time>12:30 am</time><p>Bounce the dry ones too.<span>Your mixer always asks for them.</span></p></div>
+    <div class="card"><time>1:05 am</time><p>Name 62 files.<span>“Gtr 2 DRY final.wav”</span></p></div>
+    <div class="card"><time>1:40 am</time><p>Zip it all and wait.<span>The progress bar says 14 minutes.</span></p></div>
+    <div class="card"><time>2:10 am</time><p>“Can you send the vocal without the reverb?”<span>So you open the project again.</span></p></div>
+    <div class="card reepo"><time>The same night, with Reepo</time><div class="big">11:40 pm. Add project.<br>11:41 pm. Back to the song.</div></div>
   </div>
-</section>
+  <div class="wrap"><span class="mono t3">An example night. The times are made up.</span></div>
+</div></section>
 
-<!-- 4 · found by sound -->
-<section class="band find" aria-labelledby="h-find">
-  <div class="wrap">
-    <h2 id="h-find">And every stem inside them, found by how it sounds.</h2>
-    <div class="field" role="img" aria-label="A search for dusty drums 90 bpm"><svg aria-hidden="true"><use href="#srch"/></svg><span id="q">dusty drums 90 bpm</span><span class="cur" aria-hidden="true"></span></div>
-    <div class="hits" id="hits"></div>
-  </div>
-</section>
+<!-- 4 · True stems -->
+<section class="band truesec" aria-labelledby="h-true"><div class="wrap pad">
+  <h2 id="h-true">True stems.</h2>
+  <p class="lede">When you bounce stems one at a time, the compressor and limiter on your master never hear the whole mix, so the stems don’t add up to your song. True stems add up to it exactly. If a mix can’t be matched exactly, Reepo tells you.</p>
+  <div class="eq" id="eq"><span class="t">Kick</span> <span class="op">+</span> <span class="t">Bass</span> <span class="op">+</span> <span class="t">Vox</span> <span class="op">+</span> <span class="t">Keys</span> <span class="op">+</span> <span class="t">Guitar</span> <span class="op">+</span> <span class="t">Pad</span><span class="res"><span class="eqs">=</span> your master.</span></div>
+  <div class="seg" role="group" aria-label="Stem type"><button type="button" data-k="wet" aria-pressed="false">Ordinary stems</button><button type="button" data-k="true" aria-pressed="true">True stems</button></div>
+  <div class="why" aria-live="polite">Nothing missing.</div>
+</div></section>
 
 <!-- 5 · three answers -->
-<section class="band worries" aria-label="Questions">
-  <div class="wrap qa">
-    <div><h3>Does it touch my project?</h3><span class="a">Never.</span><p>Reepo works on a copy. Your original isn’t opened, saved over or moved.</p></div>
-    <div><h3>Can I use my Mac meanwhile?</h3><span class="a">Yes.</span><p>Reepo runs your DAW out of sight. Use anything else while it works.</p></div>
-    <div><h3>What does it cost?</h3><span class="a">Free.</span><p>Free during the beta. Plans and prices come before it ends.</p></div>
-  </div>
-</section>
+<section class="band paper2" aria-label="Questions"><div class="wrap pad qa">
+  <div><h3>Does it touch my project?</h3><span class="a">Never.</span><p>Reepo works on a copy. Your original isn’t opened, saved over or moved.</p></div>
+  <div><h3>Can I use my Mac meanwhile?</h3><span class="a">Yes.</span><p>Reepo runs your DAW in the background, so you can keep working in other apps.</p></div>
+  <div><h3>What does it cost?</h3><span class="a">Free.</span><p>It’s free during the beta. We’ll announce prices before the beta ends.</p></div>
+</div></section>
 
-<!-- 6 · the payoff -->
-<section class="band dark close" id="join" aria-labelledby="h-join">
-  <div class="wrap">
-    <h2 id="h-join">
-      <span class="no">No more soloing and bouncing.</span>
-      <span class="no">No more naming files at 2&nbsp;am.</span>
-      <span class="no">No more zipping folders.</span>
-      <span class="yes">Just the music.</span>
-    </h2>
-    <div class="cta">
-      <a class="btn js-join" href="mailto:hello@reepo.studio?subject=Reepo%20beta">Ask to join the beta <span class="arr">→</span></a>
-      <span class="mono">Private beta for Mac (macOS 14+) · <button class="textbtn" type="button" id="copy">hello@reepo.studio</button><span id="copied" aria-live="polite"></span></span>
-    </div>
+<!-- 6 · the close -->
+<section class="band night close" id="join" aria-labelledby="h-join"><div class="wrap pad">
+  <h2 id="h-join"><span class="no">No more soloing and bouncing.<i></i></span><span class="no">No more naming files at 2&nbsp;am.<i></i></span><span class="no">No more zipping folders.<i></i></span><span class="yes">Just the music.</span></h2>
+  <div class="cta">
+    <a class="btn js-join" href="mailto:hello@reepo.studio?subject=Reepo%20beta">Ask to join the beta <span class="arr">→</span></a>
+    <span class="mono">Private beta for Mac, macOS 14 or later · <button class="textbtn" type="button" id="copy">hello@reepo.studio</button><span id="copied" aria-live="polite"></span></span>
   </div>
-</section>
+</div></section>
 </main>
-<footer class="band dark"><div class="wrap"><a class="logo" href="#top" style="font-size:17px"><svg style="width:22px;height:22px" aria-hidden="true"><use href="#mark"/></svg>Reepo</a><span class="mono">© 2026 Reepo · reepo.studio</span></div></footer>
+<footer class="band night"><div class="wrap"><a class="logo" href="#top" style="font-size:17px"><svg style="width:22px;height:22px" aria-hidden="true"><use href="#mark"/></svg>Reepo</a><span class="mono t3">© 2026 Reepo · reepo.studio</span></div></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (function () {
-var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-function seen(el, fn, th) { if (!('IntersectionObserver' in window)) return fn(); var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); fn(); } }, { threshold: th || .4 }); io.observe(el); }
+var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
 /* every join button: one email with what we need to know */
 var MAIL = 'mailto:hello@reepo.studio?subject=Reepo%20beta&body=' + encodeURIComponent('My DAW: \nmacOS version: \nWhere I live: \nWhat I make: \n');
-document.querySelectorAll('.js-join').forEach(function (a) { a.href = MAIL; });
+$$('.js-join').forEach(function (a) { a.href = MAIL; });
 
 /* waveforms: as many bars as the box has room for */
 function env(shape, i, n, r) {
   var t = i / n, v;
   if (shape === 'hits') v = (i % 8 === 0 ? 1 : i % 4 === 0 ? .75 : i % 2 === 0 ? .42 : .2) * (.85 + r() * .15);
-  else if (shape === 'perc') v = (i % 3 === 0 ? .85 : .25) * (.7 + r() * .3);
-  else if (shape === 'break') v = ([1, .3, .55, .2, .8, .25, .6, .35][i % 8]) * (.8 + r() * .2);
   else if (shape === 'sustain') v = .55 + .25 * Math.sin(i / 4) + r() * .1;
   else if (shape === 'phrase') v = Math.sin(t * Math.PI * 6) > -.25 ? .45 + r() * .5 : .05;
   else if (shape === 'chords') v = .3 + .55 * Math.pow(1 - (i % 12) / 12, 1.6);
   else if (shape === 'swell') v = .25 + .55 * (.5 + .5 * Math.sin(t * Math.PI * 3 - 1.4));
   else if (shape === 'strum') v = (i % 6 < 2 ? .75 : .3) * (.7 + r() * .3);
   else if (shape === 'master') v = .62 + .22 * Math.sin(t * Math.PI * 5) + r() * .14;
-  else if (shape === 'peaky') v = .4 + .55 * Math.pow(Math.abs(Math.sin(t * Math.PI * 5)), 1.4) + r() * .1;
-  else if (shape === 'residual') v = .14 + .62 * Math.pow(Math.abs(Math.sin(t * Math.PI * 5)), 3) + r() * .14;
   else v = .35 + r() * .6;
   if (t < .03) v *= t / .03 + .1;
   return Math.max(.04, Math.min(1, v));
@@ -409,109 +292,83 @@ function bars(el) {
   el.innerHTML = h;
 }
 function wave(n, seed, shape) { var d = document.createElement('div'); d.className = 'wf'; d.dataset.s = shape; d.dataset.n = n; d.dataset.seed = seed; return d; }
-function drawAll() { document.querySelectorAll('.wf[data-s]').forEach(bars); }
 
 var STEMS = [['Kick', '--cat-drums', 'hits', 'Drums'], ['Bass DI', '--cat-bass', 'sustain', 'Bass'], ['Lead vox', '--cat-vocals', 'phrase', 'Vocals'],
              ['Rhodes', '--cat-keys', 'chords', 'Keys'], ['Guitar', '--cat-guitar', 'strum', 'Guitar'], ['Pad', '--cat-synth', 'swell', 'Synth']];
-
-/* 1 · the stage's stems */
-var lanes = document.getElementById('lanes');
+var KINDS = ['wet', 'dry', 'true', 'wet', 'dry', 'true'];
 STEMS.forEach(function (s, i) {
-  var d = document.createElement('div'); d.className = 'ln'; d.style.setProperty('--k', i); d.style.setProperty('--c', 'var(' + s[1] + ')');
-  d.innerHTML = '<span class="nm"><span class="sw"></span>' + s[0] + '</span><span class="rt"><span class="kind"><span class="badge wet">WET</span><span class="badge dry">DRY</span><span class="badge true">TRUE</span></span><span class="tag"><span class="chip"><span class="sw"></span>' + s[3] + '</span></span></span>';
-  d.insertBefore(wave(72, i * 5 + 2, s[2]), d.querySelector('.rt')); lanes.appendChild(d);
+  var d = document.createElement('div'); d.style.setProperty('--c', 'var(' + s[1] + ')');
+  d.appendChild(wave(40, i * 5 + 2, s[2]));
+  d.insertAdjacentHTML('beforeend', '<span>' + s[0] + '<em class="badge ' + KINDS[i] + '">' + KINDS[i].toUpperCase() + '</em></span>');
+  $('.stems').appendChild(d);
 });
-
-/* 2 · the stems that get added up */
-var mixstems = document.getElementById('mixstems');
-STEMS.slice(0, 5).forEach(function (s, i) {
-  var d = document.createElement('div'); d.className = 'st'; d.style.setProperty('--c', 'var(' + s[1] + ')');
-  d.innerHTML = '<span>' + s[0] + '</span>'; d.appendChild(wave(110, i * 5 + 2, s[2])); mixstems.appendChild(d);
-});
-
-/* 3 · the versions */
-var vers = document.getElementById('vers');
-[['v4', 'Mix notes applied', 'Nov 6 · from your mixer', 'NEWEST', 1], ['v3', 'New lead vocal', 'Nov 2', '', 0], ['v2', 'Faster bridge', 'Oct 28', '', 0], ['v1', 'First mix', 'Oct 23', '', 0]].forEach(function (v, i) {
-  var d = document.createElement('div'); d.className = 'ver' + (v[4] ? ' newest' : '');
-  d.innerHTML = '<span class="pl" aria-hidden="true">▶</span><span class="v">' + v[0] + '</span><span class="what"><b>' + v[1] + '</b><span>' + v[2] + '</span></span>';
-  d.appendChild(wave(40, 9 + i, 'master'));
-  var t = document.createElement('span'); if (v[3]) { t.className = 'tagn'; t.textContent = v[3]; } d.appendChild(t);
-  vers.appendChild(d);
-});
-
-/* 4 · the search hits */
-var hits = document.getElementById('hits');
-[['Drums', 'Slow Burn', 'coral', 'wet', '92 BPM · A min', 'hits'], ['Drums', 'Marigold', 'marigold', 'true', '90 BPM · C♯ min', 'break'], ['Perc loop', 'Low Tide', 'navy', 'dry', '90 BPM · D min', 'perc'], ['Breakbeat', 'Night Bus Home', 'cobalt', 'wet', '91 BPM · F min', 'break']].forEach(function (r, i) {
-  var d = document.createElement('div'); d.className = 'hit'; d.style.setProperty('--c', 'var(--cat-drums)'); d.style.transitionDelay = (i * 90) + 'ms';
-  d.innerHTML = '<span class="cover" style="background-image:url(assets/covers/' + r[2] + '.jpg)"></span><span>' + r[0] + '<span class="from">' + r[1] + '</span></span>';
-  d.appendChild(wave(80, i * 7 + 3, r[5]));
-  d.insertAdjacentHTML('beforeend', '<span class="mono">' + r[4] + '</span><span class="badge ' + r[3] + '">' + r[3].toUpperCase() + '</span>');
-  hits.appendChild(d);
-});
-
+STEMS.map(function (s) { return '<span class="chip" style="--c:var(' + s[1] + ')"><span class="sw"></span>' + s[3] + '</span>'; })
+  .concat(['<span class="chip">92 BPM</span>', '<span class="chip">A minor</span>', '<span class="chip">dusty</span>', '<span class="chip">warm</span>'])
+  .forEach(function (h) { $('.chips').insertAdjacentHTML('beforeend', h); });
+function drawAll() { $$('.wf[data-s]').forEach(bars); }
 drawAll();
 var rw; addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(drawAll, 200); });
 
-/* 1 · the loop: runs forward from the rest frame, only while on screen, pausable */
-var stage = document.getElementById('stage'), hero = document.querySelector('.hero'), press = document.getElementById('press'), words = hero.querySelectorAll('h1 .w'), pauseBtn = document.getElementById('pause');
-var T = [1800, 2600, 2800, 3200], p = 2, timer = null, paused = reduce, visible = true;
-function show(n) {
-  p = n; stage.dataset.p = n; hero.classList.add('run');
-  words.forEach(function (w) { w.classList.toggle('lit', +w.dataset.p <= Math.max(n, 1)); });
-  if (n === 0) { setTimeout(function () { press.classList.add('down'); }, 1000); setTimeout(function () { press.classList.remove('down'); }, 1120); }
-}
-function tick() { timer = null; if (paused || !visible || document.hidden) return; show((p + 1) % 4); timer = setTimeout(tick, T[p]); }
-function resume() { if (!timer && !paused && visible && !document.hidden) timer = setTimeout(tick, T[p]); }
-if (reduce) { pauseBtn.hidden = true; }
-else {
-  words.forEach(function (w) { w.classList.add('lit'); }); hero.classList.add('run');
-  timer = setTimeout(tick, 2400);
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) resume(); else { clearTimeout(timer); timer = null; } }, { threshold: .15 }).observe(stage);
-  document.addEventListener('visibilitychange', function () { if (document.hidden) { clearTimeout(timer); timer = null; } else resume(); });
-  pauseBtn.addEventListener('click', function () {
-    paused = !paused; pauseBtn.setAttribute('aria-pressed', paused); pauseBtn.textContent = paused ? 'Play' : 'Pause';
-    if (paused) { clearTimeout(timer); timer = null; } else resume();
-  });
-}
-
-/* 2 · Ordinary / True */
-var mix = document.getElementById('mix'), verdict = document.getElementById('verdict'), segs = document.querySelectorAll('.seg button');
-function setKind(k) {
-  segs.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.k === k); });
-  mix.classList.toggle('wet', k === 'wet');
-  verdict.textContent = k === 'true' ? 'Nothing missing.' : 'Missing: your master’s glue and loudness.';
-}
-segs.forEach(function (b) { b.addEventListener('click', function () { setKind(b.dataset.k); }); });
-if (!reduce && mix.getBoundingClientRect().top > innerHeight) { setKind('wet'); seen(mix, function () { setTimeout(function () { setKind('true'); }, 1400); }, .5); }
-
-/* 3 · the files give way to the song (only when it starts below the screen) */
+/* True stems: Ordinary / True */
 (function () {
-  var sec = document.getElementById('songs'), g = sec.querySelector('.grid'), go = function () { sec.classList.add('go'); };
-  if (reduce || g.getBoundingClientRect().top < innerHeight) { go(); return; }
-  seen(g, function () { setTimeout(go, 500); }, .45); setTimeout(go, 8000);
+  var btns = $$('.truesec .seg button'), eqs = $('#eq .eqs'), why = $('.truesec .why');
+  btns.forEach(function (b) { b.addEventListener('click', function () {
+    var k = b.dataset.k; btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    eqs.textContent = k === 'true' ? '=' : '≠';
+    why.textContent = k === 'true' ? 'Nothing missing.' : 'Missing: your master’s glue and loudness.';
+  }); });
 })();
 
-/* 4 · the search retypes once in view */
-(function () {
-  var q = document.getElementById('q'), text = q.textContent, field = document.querySelector('.find .field');
-  if (reduce || field.getBoundingClientRect().top < innerHeight) return;
-  seen(field, function () {
-    var i = 0; q.textContent = ''; hits.classList.add('typing');
-    (function t() { i++; q.textContent = text.slice(0, i); if (i < text.length) setTimeout(t, 65); else setTimeout(function () { hits.classList.remove('typing'); }, 180); })();
-  }, .8);
-})();
-
-/* 6 · the lines strike through as you arrive */
-(function () {
-  var c = document.querySelector('.close'); if (reduce || c.getBoundingClientRect().top < innerHeight) return;
-  c.classList.add('armed'); seen(c, function () { c.classList.add('go'); }, .35); setTimeout(function () { c.classList.add('go'); }, 20000);
-})();
-
-document.getElementById('copy').addEventListener('click', function () {
-  var out = document.getElementById('copied'), b = this, clear = function () { setTimeout(function () { out.textContent = ''; }, 2000); };
+$('#copy').addEventListener('click', function () {
+  var out = $('#copied'), b = this, clear = function () { setTimeout(function () { out.textContent = ''; }, 2000); };
   function sel() { var r = document.createRange(); r.selectNodeContents(b); var s = getSelection(); s.removeAllRanges(); s.addRange(r); out.textContent = ' · selected, press ⌘C'; clear(); }
   try { navigator.clipboard.writeText('hello@reepo.studio').then(function () { out.textContent = ' · copied'; clear(); }, sel); } catch (e) { sel(); }
 });
+
+/* motion: only with GSAP loaded and motion allowed; without it every section is already laid out to read */
+if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+gsap.registerPlugin(ScrollTrigger);
+gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', function () {
+  // hero: lines rise once, the strip plays like a meter
+  gsap.from('.hero h1 .l > span', { yPercent: 105, duration: 1.1, ease: 'expo.out', stagger: .09, delay: .1 });
+  gsap.from('.strip .wf i', { scaleY: .05, duration: .9, ease: 'power3.out', stagger: { each: .004 }, delay: .4 });
+
+  // the poster: one pin, three words that become what they say
+  var poster = $('#poster'); poster.classList.add('run');
+  gsap.set('.scene', { yPercent: -50, y: 0 });   // GSAP owns the centring, so each scene's own y adds to it
+  var chips = $$('.chips .chip');
+  var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: poster, start: 'top top', end: '+=3600', pin: true, scrub: .7 } });
+  tl.set('#s2, #s3', { autoAlpha: 0 }, 0)
+    .fromTo('#s1 .fill', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1 }, 0)
+    .fromTo('#s1 .head', { left: '0%' }, { left: '100%', duration: 1 }, 0)
+    .from('#s1 .stems > div', { opacity: 0, y: 30, stagger: .14, duration: .25 }, .1)
+    .to('#s1 .head', { opacity: 0, duration: .05 }, 1)
+    .to('#s1', { autoAlpha: 0, y: -60, duration: .3 }, 1.25)
+    .fromTo('#s2', { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: .3 }, 1.4)
+    .from(chips, { x: function () { return gsap.utils.random(-380, 380); }, y: function () { return gsap.utils.random(-260, 120); }, rotation: function () { return gsap.utils.random(-25, 25); }, opacity: 0, stagger: .05, duration: .6, ease: 'power2.out' }, 1.55)
+    .to('#s2', { autoAlpha: 0, y: -60, duration: .3 }, 2.6)
+    .fromTo('#s3', { autoAlpha: 0 }, { autoAlpha: 1, duration: .2 }, 2.75)
+    .fromTo('#s3 .word', { scale: 1.25, transformOrigin: 'left center' }, { scale: 1, duration: .4 }, 2.75)
+    .from('#s3 .link', { scaleX: .2, opacity: 0, transformOrigin: 'left center', duration: .35, ease: 'power2.out' }, 3.05)
+    .from('#s3 .roles > span', { opacity: 0, y: 14, stagger: .08, duration: .2 }, 3.35)
+    .to({}, { duration: .3 });
+
+  // the night: vertical scroll, sideways time
+  var night = $('#night'), track = $('#track'); night.classList.add('run');
+  gsap.to(track, { x: function () { return -(track.scrollWidth - innerWidth + 40); }, ease: 'none',
+    scrollTrigger: { trigger: night, start: 'top top', end: function () { return '+=' + (track.scrollWidth * 1.1); }, pin: true, scrub: .8, invalidateOnRefresh: true } });
+  gsap.from('#track .card:not(.reepo)', { opacity: .35, stagger: .2, scrollTrigger: { trigger: night, start: 'top top', end: function () { return '+=' + track.scrollWidth; }, scrub: true } });
+
+  // the equation: terms light one by one as you read across
+  var eq = $('#eq'); eq.classList.add('run');
+  gsap.to('#eq .t', { color: function () { return getComputedStyle(eq).color; }, stagger: .2, scrollTrigger: { trigger: eq, start: 'top 80%', end: 'bottom 55%', scrub: .5 } });
+  gsap.from('#eq .res', { opacity: 0, y: 30, scrollTrigger: { trigger: eq, start: 'center 65%', end: 'bottom 50%', scrub: .5 } });
+  gsap.from('.qa .a', { yPercent: 40, opacity: 0, stagger: .1, scrollTrigger: { trigger: '.qa', start: 'top 80%', end: 'center 60%', scrub: .5 } });
+  gsap.fromTo('.close .no i', { scaleX: 0 }, { scaleX: 1, stagger: .3, scrollTrigger: { trigger: '.close h2', start: 'top 75%', end: 'center 45%', scrub: .5 } });
+
+  return function () { poster.classList.remove('run'); night.classList.remove('run'); eq.classList.remove('run'); };
+});
+if (document.fonts) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
 })();
 </script>
 </body>
