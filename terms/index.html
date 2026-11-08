@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reepo beta terms</title>
+<meta name="description" content="The Reepo beta tester agreement, privacy notice and terms of use.">
+<link rel="canonical" href="https://reepo.studio/terms">
+<meta name="theme-color" content="#EEE9DF">
+<link rel="icon" type="image/svg+xml" href="../assets/logo-mark.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="../assets/icon-64.png">
+<link rel="apple-touch-icon" href="../assets/icon-256.png">
+<style>
+/* The beta terms. Text from the founders' doc "Reepo beta: agreement, privacy and terms" (2026-11-04 version,
+   the TERMS_VERSION in ui/js/settings.js). Change the text there first, then here, and bump the version together. */
+@font-face { font-family: "Bricolage Grotesque"; src: url("../assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+:root {
+  --ink: #0B0B0C; --paper: #EEE9DF; --paper-2: #E4DED1; --t2: #4A463F; --t3: #6E685E; --rule: rgba(11,11,12,.14);
+  --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper) url("../assets/paper-grain.png"); color: var(--ink); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-left, 0px)) 0 max(20px, env(safe-area-inset-right, 0px)); }
+a { color: inherit; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.mono { font-family: var(--mono); font-size: 13px; }
+header { border-bottom: 1px solid var(--rule); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 64px; }
+.logo { display: inline-flex; align-items: center; gap: 9px; font-weight: 750; font-size: 19px; letter-spacing: -0.02em; text-decoration: none; }
+.logo img { width: 24px; height: 24px; }
+main { padding: 56px 0 80px; }
+h1 { margin: 0 0 12px; font-size: clamp(36px, 7vw, 56px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.lead { margin: 0 0 8px; color: var(--t2); font-size: 18px; }
+.ver { color: var(--t3); margin: 0 0 32px; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 8px; }
+nav.toc a { font-weight: 600; text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+section { padding-top: 48px; scroll-margin-top: 16px; }
+h2 { margin: 0 0 16px; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+p { margin: 0 0 16px; }
+ol, ul { margin: 0 0 16px; padding-left: 24px; }
+li { margin-bottom: 10px; padding-left: 4px; }
+li::marker { font-family: var(--mono); font-size: 14px; color: var(--t3); }
+b { font-weight: 700; }
+.tbl { overflow-x: auto; margin: 0 0 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); }
+th { font: 500 12px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--t3); }
+td:first-child { width: 52%; }
+footer { border-top: 1px solid var(--rule); padding: 24px 0 40px; color: var(--t3); }
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="../"><img src="../assets/logo-mark.svg" alt="">Reepo</a><a class="mono" href="mailto:hello@reepo.studio">hello@reepo.studio</a></div></header>
+<main><div class="wrap">
+<h1>Reepo beta terms</h1>
+<p class="lead">The beta tester agreement, the privacy notice and the terms of use you agree to when you tick the box in Reepo.</p>
+<p class="ver mono">Version of November 4, 2026 · for invited testers in the US</p>
+<nav class="toc" aria-label="On this page"><a href="#agreement">Beta tester agreement</a><a href="#privacy">Privacy notice</a><a href="#terms">Terms of use</a></nav>
+
+<section id="agreement">
+<h2>Beta tester agreement</h2>
+<p>By ticking the box in Reepo, you agree to the following with Kyle Shirk and Michael Harrison, who make Reepo (“we”). Reepo isn’t a company yet; once it is, it takes our place in this agreement and we’ll tell you.</p>
+<ol>
+<li><b>It’s a test version.</b> Reepo is pre-release software, given as is, with no warranty. It may have bugs, and it may lose data. Keep your own backups of your projects and of ~/Reepo (Time Machine is enough). To the extent the law allows, our liability is limited to what you paid, which is nothing.</li>
+<li><b>Your projects stay untouched.</b> Reepo makes its stems from copies and never writes to your project files. If you ever find a project file changed, stop and tell us at once.</li>
+<li><b>Your music stays yours.</b> You give us only the permission needed to store your files, process them (previews, tags, sound fingerprints for search) and show them to the people you share them with. We don’t train anything on your audio. The tagger learns from your tag picks only if you choose “Help train the tagger”, and even then it gets your tags and stem names, never audio.</li>
+<li><b>The cloud is optional.</b> Until we tell you the outside security review is done, put only music in the cloud that you could afford to have leak. Anything you don’t sign in for stays on your Mac.</li>
+<li><b>You have the rights</b> to everything you put in Reepo’s cloud or share through it.</li>
+<li><b>Keep it between us.</b> Don’t share the app, screenshots, its features or how it performs in public until we say so. This ends when Reepo launches publicly, or 12 months after you agree, whichever comes first.</li>
+<li><b>Feedback.</b> We may use any feedback you give, forever, without paying for it. We don’t have to use it.</li>
+<li><b>Usage and crash reports</b> are on unless you turn them off in Settings → Help. They never carry your audio or the names of your projects, tracks or files (see the <a href="#privacy">privacy notice</a>).</li>
+<li><b>The beta cloud is temporary.</b> We may reset it with 7 days’ notice. We delete beta cloud data 30 days after the beta ends, unless it moves into a real account.</li>
+<li><b>Either side can end this at any time.</b> There’s nothing to buy and no fee. Ask and we delete your account and your cloud data.</li>
+</ol>
+<p>Questions: <a href="mailto:hello@reepo.studio">hello@reepo.studio</a>.</p>
+</section>
+
+<section id="privacy">
+<h2>Privacy notice (beta)</h2>
+<p>Reepo keeps your stems on your Mac; what reaches us is your account, what you choose to put in the cloud, and usage reports you can turn off. Kyle Shirk and Michael Harrison, doing business as Reepo, decide how this data is used and answer for it. Contact: <a href="mailto:hello@reepo.studio">hello@reepo.studio</a>.</p>
+<div class="tbl"><table>
+<thead><tr><th>What</th><th>Where it’s kept</th><th>Only when</th></tr></thead>
+<tbody>
+<tr><td>Your email address, display name, cloud space and plan dates</td><td>Supabase (US, Ohio)</td><td>you sign in</td></tr>
+<tr><td>Names, sizes and fingerprints of your projects, versions and files; who uploaded what; who you share with and their email addresses</td><td>Supabase</td><td>you sign in</td></tr>
+<tr><td>The audio files themselves, exact copies, and their previews</td><td>Cloudflare R2</td><td>you sign in and they upload</td></tr>
+<tr><td>When a listening link was opened, and comments left on it</td><td>Supabase</td><td>you share a link</td></tr>
+<tr><td>Sign-in codes and invite emails</td><td>Resend (sends them)</td><td>you sign in or invite someone</td></tr>
+<tr><td>Usage and crash reports: an install id, app, macOS and DAW versions, how each add went and how long it took, which features get used, crash details</td><td>Supabase</td><td>reports are on (the default)</td></tr>
+<tr><td>A problem report: your note, the add’s log and checks with names taken out, and your email if you give it</td><td>Supabase</td><td>you press Send in Report a problem</td></tr>
+</tbody>
+</table></div>
+<p><b>Never sent:</b> your audio (unless you put it in the cloud), your project files, and the names of your projects, tracks or files in usage reports. Your Library, settings and Feedback notes stay on your Mac.</p>
+<p><b>Why we use it:</b> to run the service, to fix bugs and to improve Reepo. We never sell your data and show no ads.</p>
+<p><b>How long:</b> account data while your account exists; beta cloud data until 30 days after the beta ends; raw usage reports for 13 months. Settings → Help → “Delete what was sent” erases your usage reports from our side.</p>
+<p><b>Your rights:</b> email <a href="mailto:hello@reepo.studio">hello@reepo.studio</a> to see, correct or delete your data, or to close your account. We answer within 30 days.</p>
+<p><b>Who helps us run it:</b></p>
+<div class="tbl"><table>
+<thead><tr><th>Company</th><th>What for</th></tr></thead>
+<tbody>
+<tr><td>Supabase, Inc.</td><td>sign-in, database, server functions</td></tr>
+<tr><td>Cloudflare, Inc.</td><td>file storage (R2), the listening-link page, DNS</td></tr>
+<tr><td>Resend</td><td>sending email</td></tr>
+<tr><td>Apple</td><td>checks the app itself before it runs (notarization); Apple gets none of your data from Reepo</td></tr>
+</tbody>
+</table></div>
+<p>Reepo is for people 16 and over. If this notice changes, we’ll tell you before the change applies.</p>
+</section>
+
+<section id="terms">
+<h2>Terms of use (beta)</h2>
+<p>The tester agreement above carries most of the rules; these add how the cloud and sharing may be used.</p>
+<ul>
+<li><b>Fair use of the cloud.</b> Don’t upload material you aren’t allowed to store, attack or probe the service, script sign-ups, or try to reach other people’s files.</li>
+<li><b>Hosting your content.</b> We store and serve your files only to run Reepo for you and the people you share with (the agreement’s point 3).</li>
+<li><b>Sharing is your call.</b> Someone with your listening link hears the master you chose, nothing more. You decide who gets a link or an invite and are responsible for that choice. You can take a link or an invite back at any time.</li>
+<li><b>Takedowns.</b> If someone tells us that something in Reepo’s cloud infringes their rights, we turn off its sharing, tell the uploader, and keep a record. We close the accounts of people who infringe repeatedly. Write to <a href="mailto:hello@reepo.studio">hello@reepo.studio</a>.</li>
+<li><b>Ending an account.</b> We may suspend or close an account that breaks these terms, and you may close yours at any time (the agreement’s point 10).</li>
+<li><b>Not endorsed.</b> Logic Pro, Ableton Live, FL Studio and Pro Tools are their owners’ trademarks; Reepo works with them but isn’t made or endorsed by Apple, Ableton, Image-Line or Avid.</li>
+<li><b>Changes.</b> We’ll tell you before these terms change. If you keep using the beta after that, you accept the new terms.</li>
+<li><b>Governing law.</b> These terms are governed by the laws of the State of California.</li>
+</ul>
+</section>
+</div></main>
+<footer><div class="wrap mono">© 2026 Reepo · <a href="../">reepo.studio</a></div></footer>
+</body>
+</html>
