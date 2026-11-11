@@ -11,8 +11,10 @@
 <link rel="icon" type="image/png" sizes="64x64" href="../assets/icon-64.png">
 <link rel="apple-touch-icon" href="../assets/icon-256.png">
 <style>
-/* The beta terms. Text from the founders' doc "Reepo beta: agreement, privacy and terms" (2026-11-04 version,
-   the TERMS_VERSION in ui/js/settings.js). Change the text there first, then here, and bump the version together. */
+/* The beta terms. Text from the founders' doc "Reepo beta: agreement, privacy and terms" (2026-11-11 version,
+   the TERMS_VERSION in ui/js/settings.js; 2026-11-04 signed off by Kyle and Michael, 2026-11-11's two changes by
+   Michael on 2026-11-10). Change the text there first, then here, and bump the version together: the app, the invite
+   page and a terms_versions row in the cloud (Stem Maker's tests/unit/test_terms_version.py). */
 @font-face { font-family: "Bricolage Grotesque"; src: url("../assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
@@ -61,7 +63,7 @@ footer { border-top: 1px solid var(--rule); padding: 24px 0 40px; color: var(--t
 <main><div class="wrap">
 <h1>Reepo beta terms</h1>
 <p class="lead">The beta tester agreement, the privacy notice and the terms of use you agree to when you tick the box in Reepo.</p>
-<p class="ver mono">Version of November 4, 2026 · for invited testers in the US</p>
+<p class="ver mono">Version of November 11, 2026 · for invited testers in the US</p>
 <nav class="toc" aria-label="On this page"><a href="#agreement">Beta tester agreement</a><a href="#privacy">Privacy notice</a><a href="#terms">Terms of use</a></nav>
 
 <section id="agreement">
@@ -78,6 +80,7 @@ footer { border-top: 1px solid var(--rule); padding: 24px 0 40px; color: var(--t
 <li><b>Usage and crash reports</b> are on unless you turn them off in Settings → Help. They never carry your audio or the names of your projects, tracks or files (see the <a href="#privacy">privacy notice</a>).</li>
 <li><b>The beta cloud is temporary.</b> We may reset it with 7 days’ notice. We delete beta cloud data 30 days after the beta ends, unless it moves into a real account.</li>
 <li><b>Either side can end this at any time.</b> There’s nothing to buy and no fee. Ask and we delete your account and your cloud data.</li>
+<li><b>Reepo stays ours.</b> We let you use Reepo for testing only. Don’t copy it, pass it on, take it apart to see how it works, or use what you learn in the beta to build or help build a competing product. Reepo, its code and its design belong to us.</li>
 </ol>
 <p>Questions: <a href="mailto:hello@reepo.studio">hello@reepo.studio</a>.</p>
 </section>
@@ -93,7 +96,7 @@ footer { border-top: 1px solid var(--rule); padding: 24px 0 40px; color: var(--t
 <tr><td>The audio files themselves, exact copies, and their previews</td><td>Cloudflare R2</td><td>you sign in and they upload</td></tr>
 <tr><td>When a listening link was opened, and comments left on it</td><td>Supabase</td><td>you share a link</td></tr>
 <tr><td>Sign-in codes and invite emails</td><td>Resend (sends them)</td><td>you sign in or invite someone</td></tr>
-<tr><td>Usage and crash reports: an install id, app, macOS and DAW versions, how each add went and how long it took, which features get used, crash details</td><td>Supabase</td><td>reports are on (the default)</td></tr>
+<tr><td>Usage and crash reports: your account once you’ve signed in on that Mac (then and after; a Mac that has never signed in sends only an install id); app, macOS and DAW versions, how each add went and how long it took, which features get used, crash details</td><td>Supabase</td><td>reports are on (the default)</td></tr>
 <tr><td>A problem report: your note, the add’s log and checks with names taken out, and your email if you give it</td><td>Supabase</td><td>you press Send in Report a problem</td></tr>
 </tbody>
 </table></div>
