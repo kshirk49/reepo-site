@@ -273,7 +273,7 @@ body { background: var(--paper); color: var(--ink); }
   <div><b>Never</b><span>touches your project. Reepo works on a copy.</span></div>
   <div><b>Hidden</b><span>Your DAW runs in the background. Keep working.</span></div>
   <div><b>Free</b><span>for the whole beta. Prices come before it ends.</span></div>
-  <div><b>14+</b><span>macOS 14 or later, on a Mac.</span></div>
+  <div><b>14+</b><span>macOS 14 or later, on a Mac with Apple silicon (M1 or newer).</span></div>
 </div></div></section>
 <section class="s-close paperg"><div class="wrap"><h2 data-split>Just the music.</h2>
   <div class="endcta"><a class="btn js-join" href="mailto:hello@reepo.studio">Ask to join the beta →</a><span class="mono">Private beta · <button class="textbtn js-copy" type="button">hello@reepo.studio</button><span class="js-copied" aria-live="polite"></span></span></div></div></section>
@@ -294,7 +294,7 @@ function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 function sm(t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); }
 function lerp(a, b, t) { return a + (b - a) * t; }
 
-var MAIL = 'mailto:hello@reepo.studio?subject=Reepo%20beta&body=' + encodeURIComponent('My DAW: \nmacOS version: \nWhere I live: \nWhat I make: \n');
+var MAIL = 'mailto:hello@reepo.studio?subject=Reepo%20beta&body=' + encodeURIComponent('My DAW: \nmacOS version: \nMy Mac (Apple menu › About This Mac › Chip): \nWhere I live: \nWhat I make: \n');
 $$('.js-join').forEach(function (a) { a.href = MAIL; });
 $$('.js-copy').forEach(function (b) {
   var out = b.parentNode.querySelector('.js-copied');
